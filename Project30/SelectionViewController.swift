@@ -35,12 +35,13 @@ class SelectionViewController: UITableViewController {
         
         for item in items {
             let imageRootName = item.replacingOccurrences(of: "Large", with: "Thumb")
-            let path = Bundle.main.path(forResource: imageRootName, ofType: nil)
-            let image = UIImage(contentsOfFile: path!)
-            images.append(image!)
-            print(images.count)
+            if let path = Bundle.main.path(forResource: imageRootName, ofType: nil) {
+                if let image = UIImage(contentsOfFile: path) {
+                    images.append(image)
+                }
+            }
+
         }
-        
     }
 
 	override func viewWillAppear(_ animated: Bool) {
