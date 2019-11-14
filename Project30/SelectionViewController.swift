@@ -33,14 +33,23 @@ class SelectionViewController: UITableViewController {
             }
         }
         
+        // CACHED Images
+//        for item in items {
+//            let imageRootName = item.replacingOccurrences(of: "Large", with: "Thumb")
+//            if let path = Bundle.main.path(forResource: imageRootName, ofType: nil) {
+//                if let image = UIImage(contentsOfFile: path) {
+//                    images.append(image)
+//                }
+//            }
+//
+//        }
+        
+        // UNCACHED images
         for item in items {
             let imageRootName = item.replacingOccurrences(of: "Large", with: "Thumb")
-            if let path = Bundle.main.path(forResource: imageRootName, ofType: nil) {
-                if let image = UIImage(contentsOfFile: path) {
-                    images.append(image)
-                }
+            if let image = UIImage(uncached: imageRootName) {
+                images.append(image)
             }
-
         }
     }
 
@@ -115,4 +124,15 @@ class SelectionViewController: UITableViewController {
 
         navigationController?.pushViewController(vc, animated: true)
 	}
+}
+
+
+extension UIImage {
+    convenience init?(uncached name: String) {
+        if let path = Bundle.main.path(forResource: name, ofType: nil) {
+            self.init(contentsOfFile: path)
+        } else {
+            return nil
+        }
+    }
 }
